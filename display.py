@@ -19,8 +19,6 @@ FPSCLOCK = pygame.time.Clock()
 
 DISPLAYSURF = None
 
-BASICFONT = None
-
 gameboard = None
 
 colors = {
@@ -38,7 +36,7 @@ BASICFONTSIZE = 30
 
 def terminate():
     pygame.quit()
-    sys.exit()
+    os._exit(0)
 
 
 def checkForQuit():
@@ -48,17 +46,17 @@ def checkForQuit():
         if event.key == K_ESCAPE:
             terminate() # terminate if the KEYUP event was for the Esc key
         pygame.event.post(event) # put the other KEYUP event objects back
-    
+
     return False
 
 
 def start(fen=''):
-    pygame.init()
+    global gameboard
+    pygame.display.init()
 
     # Setting up the GUI window.
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
-    pygame.display.set_caption('LOCI')
-    BASICFONT = pygame.font.SysFont('calibri', BASICFONTSIZE)
+    pygame.display.set_caption('B.C.E')
 
     checkForQuit()
 
@@ -70,9 +68,8 @@ def start(fen=''):
         gameboard.updatePieces(fen)
     else:
         gameboard.drawPieces()
-    
+
     pygame.display.update()
-    FPSCLOCK.tick(FPS)
 
 def update(fen):
     checkForQuit()
@@ -80,4 +77,3 @@ def update(fen):
     gameboard.updatePieces(fen)
 
     pygame.display.update()
-    FPSCLOCK.tick(FPS)
